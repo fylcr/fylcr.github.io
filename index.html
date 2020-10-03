@@ -4,20 +4,29 @@
     <meta charset="utf-8">
     <title>fylcrの主页</title>
     <link rel="icon" href="https://raw.githubusercontent.com/fylcr/fylcr.github.io/master/cr.ico" type="image/x-icon" />
+    <script>
+    int i=1
+    <!--1为电脑，2为手机-->
+    if ((navigator.userAgent.match(/(iPhone|iPod|Android|ios|iOS|iPad|Backerry|WebOS|Symbian|Windows Phone|Phone)/i))) {
+        i=2
+    }else{
+        i=1
+    }
+    </script>
     <style>
         #主体 {
-            margin-top: 60px;
+            margin-top: 40px;
             margin-left: 480px;
             width: 960px;
             background-color: rgba(255,255,255,1);
         }
         #导航栏 {
-            margin-top: -80px;
+            margin-top:0px;
             padding: 0px;
             width: 1000px;
             position: absolute;
             left: 23.9%;
-            margin-left: -500px
+            margin-left: 0px
         }
         #导航栏 ul li{
             float:left;
