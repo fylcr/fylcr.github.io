@@ -1,4 +1,5 @@
 # [fylcrの主页](https://fylcr.github.io)
 ## 简介
-![fylcr的图标](cr.png =50×50)
+<img src="cr.png" width = "50" height = "50" alt="fylcr的图标" align=center />
+
 
