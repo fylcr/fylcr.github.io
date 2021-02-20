@@ -16,7 +16,7 @@ Old age should burn and rave at close of day;
 Rage, rage against the dying of the light.  
 怒斥，怒斥光明的消逝。  
 Though wise men at their end know dark is right,   
-虽然智慧的人临终时懂得黑暗有理， 
+虽然智慧的人临终时懂得黑暗有理，    
 Because their words had forked no lightning they  
 因为他们的话没有迸发出闪电，他们  
 Do not go gentle into that good night.  
@@ -40,7 +40,7 @@ Blind eyes could blaze like meteors and be gay,
 Rage, rage against the dying of the light.   
 怒斥，怒斥光明的消逝。  
 And you, my father, there on the sad height,   
-您啊，我的父亲．在那悲哀的高处．
+您啊，我的父亲．在那悲哀的高处．      
 Curse, bless me now with your fierce tears, I pray.   
 现在用您的热泪诅咒我，祝福我吧．我求您   
 Do not go gentle into that good night.    
