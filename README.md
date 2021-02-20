@@ -3,10 +3,13 @@
 <img src="cr.png" width = "25" height = "13" alt="fylcr的图标" align=center />是fylcr的图标,图中"cr"是fylcr的简称  
 fylcrの主页是个人私有的,仅是作者编写的软件与作者所搜集的视频
 ## 网站文化
+### 站语
+不忘初心，方得始终。   
+
 ### 站歌
 暂定
 ### 站诗
-[《不要温和地走进那个良夜》（Do not go gentle into that good night）](https://baike.baidu.com/item/%E4%B8%8D%E8%A6%81%E6%B8%A9%E5%92%8C%E5%9C%B0%E8%B5%B0%E8%BF%9B%E9%82%A3%E4%B8%AA%E8%89%AF%E5%A4%9C/8670983?fr=aladdin#reference-[2]-3268076-wrap)  
+[《不要温和地走进那良夜》（Do not go gentle into that good night）](https://baike.baidu.com/item/%E4%B8%8D%E8%A6%81%E6%B8%A9%E5%92%8C%E5%9C%B0%E8%B5%B0%E8%BF%9B%E9%82%A3%E4%B8%AA%E8%89%AF%E5%A4%9C/8670983?fr=aladdin#reference-[2]-3268076-wrap)  
 作者:狄兰·托马斯     
 译者:巫宁坤     
 全诗:  
@@ -48,3 +51,4 @@ Do not go gentle into that good night.
 不要温和地走进那个良夜。  
 Rage, rage against the dying of the light.    
 怒斥，怒斥光明的消逝。   
+<img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fthing_review%2Fl%2Fpublic%2F2068022.jpg&refer=http%3A%2F%2Fimg3.doubanio.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1616382367&t=6be2210549483213337f6a87591a34ed" width = "25" height = "13" alt="《星际穿越》中的" align=center />
