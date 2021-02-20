@@ -24,7 +24,7 @@ Do not go gentle into that good night.
  Good men, the last wave by, crying how bright   
 善良的人，当最后一浪过去，高呼他们脆弱的善行  
 Their frail deeds might have danced in a green bay,   
-可能曾会多么光辉地在绿色的海湾里舞蹈，  
+可能曾会多么光辉地在绿色的海湾里舞蹈，    
 Rage, rage against the dying of the light.   
 怒斥，怒斥光明的消逝。  
 Wild men who caught and sang the sun in flight,  
