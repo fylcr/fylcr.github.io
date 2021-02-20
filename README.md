@@ -20,8 +20,8 @@ Though wise men at their end know dark is right,
 Because their words had forked no lightning they  
 因为他们的话没有迸发出闪电，他们  
 Do not go gentle into that good night.  
-也并不温和地走进那个良夜。 
- Good men, the last wave by, crying how bright   
+也并不温和地走进那个良夜。  
+Good men, the last wave by, crying how bright   
 善良的人，当最后一浪过去，高呼他们脆弱的善行  
 Their frail deeds might have danced in a green bay,   
 可能曾会多么光辉地在绿色的海湾里舞蹈，    
@@ -36,7 +36,7 @@ Do not go gentle into that good night.
 Grave men, near death, who see with blinding sight   
 严肃的人，接近死亡，用炫目的视觉看出  
 Blind eyes could blaze like meteors and be gay,  
-失明的眼睛可以像流星一样闪耀欢欣，
+失明的眼睛可以像流星一样闪耀欢欣，   
 Rage, rage against the dying of the light.   
 怒斥，怒斥光明的消逝。  
 And you, my father, there on the sad height,   
