@@ -52,3 +52,7 @@ Do not go gentle into that good night.
 Rage, rage against the dying of the light.    
 怒斥，怒斥光明的消逝。   
 <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fthing_review%2Fl%2Fpublic%2F2068022.jpg&refer=http%3A%2F%2Fimg3.doubanio.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1616382367&t=6be2210549483213337f6a87591a34ed" width = "320" height = "462" alt="《星际穿越》中的不要温和地走进那良夜》" align=center />
+作者之所以选这首诗为站诗，是因为以下几点:   
+1.这首诗是作者喜欢的电影《星际穿越》中的主题诗  
+2.这首诗读起来也好听(除了倒数第3,4句,我是不会认这个坑的)  
+3.这首诗也希望这个网站遇到什么打击也不会温顺地走进那个"良夜"  
