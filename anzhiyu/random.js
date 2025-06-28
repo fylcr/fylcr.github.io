@@ -1,4 +1,4 @@
-var posts=["posts/46e8/","posts/acec/"];function toRandomPost(){
+var posts=["posts/9073/","posts/46e8/","posts/acec/"];function toRandomPost(){
     pjax.loadUrl('/'+posts[Math.floor(Math.random() * posts.length)]);
   };var friend_link_list=[];
     var refreshNum = 1;
