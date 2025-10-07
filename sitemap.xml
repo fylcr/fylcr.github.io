@@ -119,7 +119,7 @@
 
   
   <url>
-    <loc>https://fylcr.dpdns.org/tags/btfs/</loc>
+    <loc>https://fylcr.dpdns.org/tags/blender/</loc>
     <lastmod>2025-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -140,7 +140,21 @@
   </url>
   
   <url>
-    <loc>https://fylcr.dpdns.org/tags/blender/</loc>
+    <loc>https://fylcr.dpdns.org/tags/btfs/</loc>
+    <lastmod>2025-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://fylcr.dpdns.org/tags/Telegram/</loc>
+    <lastmod>2025-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://fylcr.dpdns.org/tags/daily/</loc>
     <lastmod>2025-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -155,20 +169,6 @@
   
   <url>
     <loc>https://fylcr.dpdns.org/tags/storage/</loc>
-    <lastmod>2025-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://fylcr.dpdns.org/tags/daily/</loc>
-    <lastmod>2025-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://fylcr.dpdns.org/tags/Telegram/</loc>
     <lastmod>2025-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

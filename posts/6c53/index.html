@@ -1,0 +1,549 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>使用 bot 发送和修改带按钮的 tg 消息 | fylcr主页</title><meta name="keywords" content="technology,Telegram"><meta name="author" content="fylcr"><meta name="copyright" content="fylcr"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="使用 bot 发送和修改带按钮的 tg 消息"><meta name="application-name" content="使用 bot 发送和修改带按钮的 tg 消息"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="使用 bot 发送和修改带按钮的 tg 消息"><meta property="og:url" content="https://fylcr.dpdns.org/posts/6c53/index.html"><meta property="og:site_name" content="fylcr主页"><meta property="og:description" content="前言&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;最近想要在我的频道里发一个有按钮的消息，但是我发现 tg 用户是不能发送带按钮的消息的。tg 里允许发送按钮的只能是 bot，所以我研究了以下 tg 的 bot api ，方便我发送和修改带按钮的消息。 &amp;ensp;&amp;ensp;&amp;ensp;&amp;amp;ens"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://i.postimg.cc/wjyBppSB/image.jpg"><meta property="article:author" content="fylcr"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://i.postimg.cc/wjyBppSB/image.jpg"><meta name="description" content="前言&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;最近想要在我的频道里发一个有按钮的消息，但是我发现 tg 用户是不能发送带按钮的消息的。tg 里允许发送按钮的只能是 bot，所以我研究了以下 tg 的 bot api ，方便我发送和修改带按钮的消息。 &amp;ensp;&amp;ensp;&amp;ensp;&amp;amp;ens"><link rel="shortcut icon" href="/favicon.svg"><link rel="canonical" href="https://fylcr.dpdns.org/posts/6c53/"><link rel="preconnect" href="//cdn.cbd.int"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: undefined,
+  postHeadAiDescription: undefined,
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎回来！"},
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: 'https://twikoo.fylcr.dpdns.org/.netlify/functions/twikoo',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: {"skills":["分享与热心帮助","数码科技爱好者","web3技术爱好者","galgame爱好者"]},
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: {"limitDay":90,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: fylcr","link":"链接: ","source":"来源: fylcr主页","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'fylcr主页',
+  title: '使用 bot 发送和修改带按钮的 tg 消息',
+  postAI: '',
+  pageFillDescription: '前言, 一、必要知识讲解, 二、发送带按钮的消息, 1. 发送文字消息, 2. 发送图片消息, 三、修改带按钮的消息, 1. 修改文字消息, 2. 修改图片消息前言最近想要在我的频道里发一个有按钮的消息但是我发现用户是不能发送带按钮的消息的里允许发送按钮的只能是所以我研究了以下的方便我发送和修改带按钮的消息不过在讲解怎么发送和修改消息前先来讲讲一些必要的知识一必要知识讲解首先你要获取的这很简单只要到就行了然后你需要知道和的事情无论是群组还是频道无论公开还是私密都会有一个编号与这个群组频道对应这就是在这个群组频道的消息会有有个与之相对应一般是这条消息在群组频道的序号如何获取和呢比较好获取这个消息的链接的最后一串数字就是就比较难获取一些如果是私密群组频道任何一条消息的链接的之前的一串数字就是也就是私密群组频道任何一条消息的链接应该是对于公开群组频道就比较难获取一些你应该知道公开群组频道有一个所有者自己设的链接比如这是我本人的的频道那么最后这个自定义的地方就被称为也就是公开群组频道的链接格式为好了现在你已经知道一个公开群组频道的了然后你需要将后面那个链接的尖括号里替换掉相应的内容并粘贴到浏览器里即可链接为之后会返回一串东西这第一个就是接下来我们来讲讲方便之后更好的创建按钮是二维数组也就是由数组组成的数组外面一层的大数组描述着按钮的层数有几项就有几层同一项的按钮在同一层里面的数组描述着同一层的按钮也就是按钮组成的数组一个按钮用这样的语法描述按钮显示的文本第二个参数第二个参数第二个参数有三种类型分别是和顾名思义点击按钮后会跳转到指定链接将会传回一个回调数据这不是我们关心的将会跳转到内联模式也不是我们关心的你可以看看下面的示例再学习一下跳转链接按钮访问百度访问谷歌多行多按钮第一行按钮第一行个按钮第二行按钮第二行按钮第二行按钮第二行个按钮第三行按钮推荐内容第三行个模式按钮注意必须是二维数组即使只有一行一个按钮也要写成按钮按钮对象必须包含且只能选一个交互参数等不能同时存在每行按钮数量建议不超过个过多会自动换行或压缩显示按钮文字过长会被截断建议控制在字以内最多个字符必须以或开头发送文字消息和媒体图片视频等消息是不一样的并且发送后不能修改消息类型即一个文字消息不能修改为媒体消息一个媒体消息不能修改为文字消息所以请你在发送消息之前一定要考虑好消息的类型二发送带按钮的消息发送文字消息调用下面的就可以发送消息了接口地址请求方法内容类型下面是请求的请求体消息的内容按钮按钮如果你不想直接调用的话你可以在下面非常方便地发送文字消息消息文本内容配置格式发送消息页面加载完成初始化表单未找到表单元素页面加载错误未找到表单按钮被点击开始处理表单正在处理请填写所有必填字段获取表单数据成功表单数据必须是二维数组解析成功格式错误请检查按钮配置准备发送请求到请求数据正在发送消息请求响应状态响应数据消息发送成功消息发送失败处理出错处理出错处理完成表单初始化完成等待用户输入发送图片消息调用下面的就可以发送消息了接口地址你的请求方法内容类型下面是请求的请求体你的图片要发送的图片必填这是图片的说明文字图片的说明文字可选按钮链接如果你不想直接调用的话你可以在下面非常方便地发送图片消息或用户名提示可直接输入或输入用户名如发送时将自动转换为机器人机器人需是该群组频道成员图片请输入可公开访问的图片支持等格式图片说明文字配置格式发送照片页面加载完成初始化表单初始化未找到表单元素页面加载错误未找到表单按钮被点击开始处理表单正在处理请填写所有必填字段用户名图片和键盘配置图片格式无效请检查获取表单数据成功正在将用户名转换为检测到用户名格式正在转换转换响应状态转换响应数据用户名转换失败未知错误请确保机器人已加入该群组频道用户名转换成功正在发送照片到转换成功已自动将用户名转换为的最终使用的参数必须是二维数组解析成功格式错误请检查按钮配置准备发送请求到请求数据正在发送照片请求响应状态响应数据照片发送成功消息发送失败处理出错处理出错处理完成表单初始化完成等待用户输入三修改带按钮的消息修改文字消息调用下面的就可以修改消息了接口地址请求方法内容类型下面是请求的请求体你的你的这是修改后的新文本新按钮新链接如果你不想直接调用的话你可以在下面非常方便地修改文字消息消息链接修改后的文本配置格式发送修改请求页面加载完成初始化表单未找到表单元素页面加载错误未找到表单按钮被点击开始处理表单正在处理请填写所有必填字段获取表单数据成功表单数据必须是二维数组解析成功格式错误请检查按钮配置解析成功解析链接格式正在通过用户名获取解析链接格式调用接口响应状态响应数据获取失败获取成功调用接口失败消息链接格式不正确请检查输入准备发送请求到请求数据正在发送修改请求修改请求响应状态修改响应数据消息修改成功修改失败处理出错处理出错处理完成表单初始化完成等待用户输入修改图片消息调用下面的就可以修改消息了接口地址请求方法内容类型下面是请求的请求体你的你的图片消息新图片新图片说明按钮链接如果你不想直接调用的话你可以在下面非常方便地修改图片消息消息链接新图片新图片说明配置格式发送修改请求页面加载完成初始化表单未找到表单元素页面加载错误未找到表单按钮被点击开始处理表单正在处理请填写所有必填字段获取表单数据成功必须是二维数组解析成功格式错误请检查按钮配置解析成功解析链接格式正在通过用户名获取解析链接格式调用接口响应状态响应数据获取失败获取成功调用接口失败消息链接格式不正确请检查输入准备发送请求到请求数据正在发送修改请求修改请求响应状态修改响应数据消息修改成功修改失败处理出错处理出错处理完成表单初始化完成等待用户输入最后如果你想获取上面那些界面的源代码可以点这里下载',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-08-06 14:30:10',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="https://i.postimg.cc/wjyBppSB/image.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">fylcr主页</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/nav/#"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 导航</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/note"><i class="anzhiyufont anzhiyu-icon-book faa-tada" style="font-size: 0.9em;"></i><span> 笔记</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-circle-info faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/donate/"><i class="anzhiyufont anzhiyu-icon-thumbs-up faa-tada" style="font-size: 0.9em;"></i><span> 捐赠</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> 搜索</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/Telegram/" style="font-size: 1.05rem;">Telegram<sup>1</sup></a><a href="/tags/blender/" style="font-size: 1.05rem;">blender<sup>1</sup></a><a href="/tags/btfs/" style="font-size: 1.05rem;">btfs<sup>1</sup></a><a href="/tags/daily/" style="font-size: 1.05rem;">daily<sup>1</sup></a><a href="/tags/godot/" style="font-size: 1.05rem;">godot<sup>1</sup></a><a href="/tags/storage/" style="font-size: 1.05rem;">storage<sup>1</sup></a><a href="/tags/technology/" style="font-size: 1.05rem;">technology<sup>6</sup></a><a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 1.05rem;">服务器<sup>1</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/08/"><span class="card-archive-list-date">八月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/07/"><span class="card-archive-list-date">七月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/06/"><span class="card-archive-list-date">六月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/technology/" itemprop="url">technology</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/technology/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>technology</span></a><a class="article-meta__tags" href="/tags/Telegram/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>Telegram</span></a></span></div></div><h1 class="post-title" itemprop="name headline">使用 bot 发送和修改带按钮的 tg 消息</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2025-08-02T11:44:56.000Z" title="发表于 2025-08-02 19:44:56">2025-08-02</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2025-08-06T06:30:10.506Z" title="更新于 2025-08-06 14:30:10">2025-08-06</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-wordcount"><i class="anzhiyufont anzhiyu-icon-file-word post-meta-icon" title="文章字数"></i><span class="post-meta-label" title="文章字数">字数总计:</span><span class="word-count" title="文章字数">4.5k</span><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-clock post-meta-icon" title="阅读时长"></i><span class="post-meta-label" title="阅读时长">阅读时长:</span><span>20分钟</span></span><span class="post-meta-separator"></span><span class="post-meta-pv-cv" id="" data-flag-title="使用 bot 发送和修改带按钮的 tg 消息"><i class="anzhiyufont anzhiyu-icon-fw-eye post-meta-icon"></i><span class="post-meta-label" title="阅读量">阅读量:</span><span id="busuanzi_value_page_pv"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-spin"></i></span></span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src="https://cn.bing.com/th?id=OHR.MongoliaYurts_ZH-CN4015475887_UHD.jpg"></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="https://fylcr.dpdns.org/posts/6c53/"><header><a class="post-meta-categories" href="/categories/technology/" itemprop="url">technology</a><a href="/tags/technology/" tabindex="-1" itemprop="url">technology</a><a href="/tags/Telegram/" tabindex="-1" itemprop="url">Telegram</a><h1 id="CrawlerTitle" itemprop="name headline">使用 bot 发送和修改带按钮的 tg 消息</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">fylcr</span><time itemprop="dateCreated datePublished" datetime="2025-08-02T11:44:56.000Z" title="发表于 2025-08-02 19:44:56">2025-08-02</time><time itemprop="dateCreated datePublished" datetime="2025-08-06T06:30:10.506Z" title="更新于 2025-08-06 14:30:10">2025-08-06</time></header><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>&ensp;&ensp;&ensp;&ensp;最近想要在我的频道里发一个有按钮的消息，但是我发现 tg 用户是不能发送带按钮的消息的。tg 里允许发送按钮的只能是 bot，所以我研究了以下 tg 的 bot api ，方便我发送和修改带按钮的消息。</p>
+<p>&ensp;&ensp;&ensp;&ensp;不过在讲解怎么发送和修改消息前，先来讲讲一些必要的知识。</p>
+<h1 id="一、必要知识讲解"><a href="#一、必要知识讲解" class="headerlink" title="一、必要知识讲解"></a>一、必要知识讲解</h1><p>&ensp;&ensp;&ensp;&ensp;首先，你要获取 bot 的 token。这很简单，只要到 <a target="_blank" rel="noopener" href="https://t.me/BotFather">@BotFather</a> 就行了。然后，你需要知道 chat_id 和 message_id 的事情。</p>
+<p>&ensp;&ensp;&ensp;&ensp;无论是群组还是频道，无论公开还是私密，tg 都会有一个编号与这个群组&#x2F;频道对应，这就是 chat_id。在这个群组&#x2F;频道的消息会有有个 message_id 与之相对应，一般 message_id 是这条消息在群组&#x2F;频道的序号。如何获取 chat_id 和 message_id 呢？message_id 比较好获取，这个消息的链接的最后一串数字就是 message_id。chat_id 就比较难获取一些，如果是私密群组&#x2F;频道，任何一条消息的链接的 message_id 之前的一串数字就是 chat_id，也就是私密群组&#x2F;频道任何一条消息的链接应该是 <code>https://t.me/c/chat+id/message_id</code>;对于公开群组&#x2F;频道，chat_id 就比较难获取一些。你应该知道，公开群组&#x2F;频道有一个所有者自己设的链接，比如 <code>https://t.me/fylcrchannel</code>（这是我本人的的频道），那么最后这个自定义的地方就被称为 username，也就是公开群组&#x2F;频道的链接格式为 <code>https://t.me/username</code>。好了，现在你已经知道一个公开群组&#x2F;频道的 username 了，然后你需要将后面那个链接的尖括号里替换掉相应的内容并粘贴到浏览器里即可，链接为 <code>https://api.telegram.org/bot&lt;BotToken&gt;/getChat?chat_id=@&lt;username&gt;</code>，之后会返回一串东西 <code>&#123;&quot;ok&quot;:true,&quot;result&quot;:&#123;&quot;id&quot;:...</code>，这第一个 id 就是 chat_id。</p>
+<p>&ensp;&ensp;&ensp;&ensp;接下来我们来讲讲 inline_keyboard，方便之后更好的创建按钮。inline_keyboard 是二维数组，也就是由数组组成的数组。外面一层的大数组描述着按钮的层数，有几项就有几层，同一项的按钮在同一层。里面的数组描述着同一层的按钮，也就是按钮组成的数组。一个按钮用这样的语法描述 <code>&#123;&quot;text&quot;: &quot;按钮显示的文本&quot;, &quot;第二个参数&quot;: &quot;第二个参数&quot;&#125;</code>。第二个参数有三种类型，分别是 <code>url</code>、<code>callback_data</code> 和 <code>switch_inline_query</code>。<code>url</code>，顾名思义，点击按钮后会跳转到指定链接；<code>callback_data</code> 将会传回一个回调数据，这不是我们关心的；<code>switch_inline_query</code> 将会跳转到内联模式，也不是我们关心的。你可以看看下面的示例再学习一下：</p>
+<ul>
+<li>跳转链接按钮（url）<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;inline_keyboard&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">  <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span><span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;访问百度&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://baidu.com&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span><span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;访问谷歌&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://google.com&quot;</span><span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure></li>
+<li>多行多按钮<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;inline_keyboard&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">  <span class="punctuation">[</span><span class="punctuation">&#123;</span><span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;第一行按钮1&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://a.com&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span>  <span class="comment">// 第一行1个按钮</span></span><br><span class="line">  <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span><span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;第二行按钮1&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;callback_data&quot;</span><span class="punctuation">:</span> <span class="string">&quot;b1&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span><span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;第二行按钮2&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;callback_data&quot;</span><span class="punctuation">:</span> <span class="string">&quot;b2&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span><span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;第二行按钮3&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;callback_data&quot;</span><span class="punctuation">:</span> <span class="string">&quot;b3&quot;</span><span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span>  <span class="comment">// 第二行3个按钮</span></span><br><span class="line">  <span class="punctuation">[</span><span class="punctuation">&#123;</span><span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;第三行按钮&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;switch_inline_query&quot;</span><span class="punctuation">:</span> <span class="string">&quot;推荐内容&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">]</span>  <span class="comment">// 第三行1个inline模式按钮</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<details><summary>注意：</summary><ul><li>必须是二维数组（即使只有一行一个按钮，也要写成 `[[按钮]]`）。</li><li>按钮对象必须包含 text，且只能选一个交互参数（url/callback_data 等不能同时存在）。</li><li>每行按钮数量建议不超过 3-4 个（过多会自动换行或压缩显示）。</li><li>按钮文字过长会被截断，建议控制在 20 字以内。</li><li>text 最多 128 个字符</li><li>url 必须以 http:// 或 https:// 开头</li></ul></details></blockquote>
+</li>
+</ul>
+<p>&ensp;&ensp;&ensp;&ensp;tg 发送文字消息和媒体（图片、视频等）消息是不一样的，并且发送后不能修改消息类型，即一个文字消息不能修改为媒体消息，一个媒体消息不能修改为文字消息。所以请你在发送消息之前一定要考虑好消息的类型。</p>
+<h1 id="二、发送带按钮的消息"><a href="#二、发送带按钮的消息" class="headerlink" title="二、发送带按钮的消息"></a>二、发送带按钮的消息</h1><h2 id="1-发送文字消息"><a href="#1-发送文字消息" class="headerlink" title="1. 发送文字消息"></a>1. 发送文字消息</h2><p>&ensp;&ensp;&ensp;&ensp;调用下面的 api 就可以发送消息了</p>
+<ul>
+<li>接口地址：<a target="_blank" rel="noopener" href="https://api.telegram.org/bot">https://api.telegram.org/bot</a><BotToken>&#x2F;sendMessage</li>
+<li>请求方法：POST</li>
+<li>内容类型：application&#x2F;json</li>
+</ul>
+<p>&ensp;&ensp;&ensp;&ensp;下面是请求的 json 请求体：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;chat_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;chat_id&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;消息的内容&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;reply_markup&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;inline_keyboard&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">      <span class="punctuation">[</span><span class="punctuation">&#123;</span><span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;按钮1&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://example.com&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">[</span><span class="punctuation">&#123;</span><span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;按钮2&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://example.com&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>&ensp;&ensp;&ensp;&ensp;如果你不想直接调用 api 的话，你可以在下面非常方便地发送文字消息。</p>
+
+<div style="max-width: 800px; margin: 20px auto; padding: 20px; font-family: Arial, sans-serif; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;"><form id="sendForm"style="background: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"><div style="margin-bottom: 15px;"><label for="chatId"style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Chat ID</label><input type="text"id="chatId"placeholder="例如: 123456789 或 -1001234567890"required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;"></div><div style="margin-bottom: 15px;"><label for="botToken"style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">BotToken</label><input type="text"id="botToken"placeholder="例如: 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11"required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;"></div><div style="margin-bottom: 15px;"><label for="messageText"style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">消息文本内容</label><textarea id="messageText"rows="3"placeholder="请输入要发送的消息内容"required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; resize: vertical;"></textarea></div><div style="margin-bottom: 15px;"><label for="inlineKeyboard"style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">inline_keyboard配置（JSON格式）</label><textarea id="inlineKeyboard"placeholder='例如: [[{"text":"按钮1","url":"https://链接1.com"},{"text":"按钮2","callback_data":"btn2"}]]'required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; min-height: 100px; resize: vertical; font-family: monospace;"></textarea></div><button type="submit"id="submitBtn"style="background: #3498db; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 14px;">发送消息</button></form><div id="result"style="margin-top: 20px; padding: 10px; border-radius: 4px;"></div><div id="debugInfo"style="margin-top: 10px; padding: 10px; font-size: 0.9em; color: #666; border-top: 1px dashed #ccc;"></div></div><script>document.addEventListener('DOMContentLoaded',function(){console.log('页面加载完成，初始化表单...');const form=document.getElementById('sendForm');const submitBtn=document.getElementById('submitBtn');const resultDiv=document.getElementById('result');const debugDiv=document.getElementById('debugInfo');submitBtn.addEventListener('mouseover',function(){this.style.background='#2980b9'});submitBtn.addEventListener('mouseout',function(){this.style.background='#3498db'});if(!form){console.error('未找到表单元素');alert('页面加载错误：未找到表单');return}form.addEventListener('submit',async function(e){console.log('按钮被点击，开始处理表单...');e.preventDefault();submitBtn.disabled=true;submitBtn.style.background='#95a5a6';resultDiv.textContent='正在处理...';resultDiv.style.background='#e3f2fd';resultDiv.style.color='#1565c0';debugDiv.textContent='';try{const chatId=document.getElementById('chatId').value;const botToken=document.getElementById('botToken').value;const text=document.getElementById('messageText').value;const inlineKeyboardStr=document.getElementById('inlineKeyboard').value;if(!chatId||!botToken||!text||!inlineKeyboardStr){throw new Error('请填写所有必填字段');}debugDiv.textContent='获取表单数据成功\n';console.log('表单数据:',{chatId,botToken,text,inlineKeyboardStr});let inlineKeyboard;try{inlineKeyboard=JSON.parse(inlineKeyboardStr);if(!Array.isArray(inlineKeyboard)){throw new Error("inline_keyboard必须是二维数组");}debugDiv.textContent+='JSON解析成功\n'}catch(jsonError){throw new Error(`JSON格式错误:${jsonError.message}，请检查按钮配置`)}const sendUrl=`https:const requestBody={chat_id:chatId,text:text,reply_markup:{inline_keyboard:inlineKeyboard}};debugDiv.textContent+=`准备发送请求到:${sendUrl}\n`;debugDiv.textContent+=`请求数据:${JSON.stringify(requestBody,null,2).substring(0,200)}...\n`;resultDiv.textContent='正在发送消息...';resultDiv.style.background='#e3f2fd';resultDiv.style.color='#1565c0';const response=await fetch(sendUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(requestBody)});debugDiv.textContent+=`请求响应状态:${response.status}\n`;const responseData=await response.json();debugDiv.textContent+=`响应数据:${JSON.stringify(responseData,null,2).substring(0,200)}...\n`;if(response.ok&&responseData.ok){resultDiv.textContent=`消息发送成功！\n消息ID:${responseData.result.message_id}\nChat ID:${chatId}`;resultDiv.style.background='#e8f5e9';resultDiv.style.color='#2e7d32'}else{resultDiv.textContent=`发送失败:${JSON.stringify(responseData,null,2)}`;resultDiv.style.background='#ffebee';resultDiv.style.color='#c62828'}}catch(error){console.error('处理出错:',error);resultDiv.textContent=`处理出错:${error.message}`;resultDiv.style.background='#ffebee';resultDiv.style.color='#c62828'}finally{submitBtn.disabled=false;submitBtn.style.background='#3498db';console.log('处理完成')}});console.log('表单初始化完成，等待用户输入...')});</script>
+
+
+<h2 id="2-发送图片消息"><a href="#2-发送图片消息" class="headerlink" title="2. 发送图片消息"></a>2. 发送图片消息</h2><p>&ensp;&ensp;&ensp;&ensp;调用下面的 api 就可以发送消息了</p>
+<ul>
+<li>接口地址：<a target="_blank" rel="noopener" href="https://api.telegram.org/bot%E4%BD%A0%E7%9A%84BotToken/sendPhoto">https://api.telegram.org/bot你的BotToken/sendPhoto</a></li>
+<li>请求方法：POST</li>
+<li>内容类型：application&#x2F;json</li>
+</ul>
+<p>&ensp;&ensp;&ensp;&ensp;下面是请求的 json 请求体：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;chat_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的chat_id&quot;</span><span class="punctuation">,</span>  </span><br><span class="line">  <span class="attr">&quot;photo&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://图片URL.jpg&quot;</span><span class="punctuation">,</span>  <span class="comment">// 要发送的图片URL（必填）</span></span><br><span class="line">  <span class="attr">&quot;caption&quot;</span><span class="punctuation">:</span> <span class="string">&quot;这是图片的说明文字&quot;</span><span class="punctuation">,</span>  <span class="comment">// 图片的说明文字（可选）</span></span><br><span class="line">  <span class="attr">&quot;reply_markup&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span>  </span><br><span class="line">    <span class="attr">&quot;inline_keyboard&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>  </span><br><span class="line">      <span class="punctuation">[</span> <span class="punctuation">&#123;</span><span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;按钮1&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://链接1.com&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>&ensp;&ensp;&ensp;&ensp;如果你不想直接调用 api 的话，你可以在下面非常方便地发送图片消息。</p>
+
+<div style="max-width: 800px; margin: 20px auto; padding: 20px; font-family: Arial, sans-serif; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;"><form id="sendForm"style="background: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"><div style="margin-bottom: 15px;"><label for="chatId"style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Chat ID或用户名</label><input type="text"id="chatId"placeholder="输入Chat ID（如123456）或用户名（如@mygroup）"required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;"><p id="chatIdInfo"style="margin: 8px 0 0 0; font-size: 0.9em; color: #555;">提示：可直接输入Chat ID，或输入用户名（如@mygroup），发送时将自动转换为ID（机器人机器人需是该群组/频道成员）</p></div><div style="margin-bottom: 15px;"><label for="botToken"style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">BotToken</label><input type="text"id="botToken"placeholder="例如: 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11"required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;"></div><div style="margin-bottom: 15px;"><label for="photoUrl"style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">图片URL</label><input type="url"id="photoUrl"placeholder="例如: https://example.com/image.jpg"required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;"><p style="margin: 5px 0 0 0; font-size: 0.9em; color: #666;">请输入可公开访问的图片URL（支持JPG、PNG等格式）</p></div><div style="margin-bottom: 15px;"><label for="caption"style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">图片说明文字</label><textarea id="caption"rows="2"placeholder="请输入图片的说明文字（可选）"style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; resize: vertical;"></textarea></div><div style="margin-bottom: 15px;"><label for="inlineKeyboard"style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">inline_keyboard配置（JSON格式）</label><textarea id="inlineKeyboard"placeholder placeholder='例如: [[{"text":"查看详情详情","url":"https://链接.com"}]]'required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; min-height: 100px; resize: vertical; font-family: monospace;"></textarea></div><button type="submit"id="submitBtn"style="background: #3498db; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 14px;">发送照片</button></form><div id="result"style="margin-top: 20px; padding: 10px; border-radius: 4px;"></div><div id="debugInfo"style="margin-top: 10px; padding: 10px; font-size: 0.9em; color: #666; border-top: 1px dashed #ccc;"></div></div><script>document.addEventListener('DOMContentLoaded',function(){console.log('页面加载完成，初始化表单初始化...');const form=document.getElementById('sendForm');const submitBtn=document.getElementById('submitBtn');const resultDiv=document.getElementById('result');const debugDiv=document.getElementById('debugInfo');const chatIdInfo=document.getElementById('chatIdInfo');const chatIdInput=document.getElementById('chatId');submitBtn.addEventListener('mouseover',function(){this.style.background='#2980b9'});submitBtn.addEventListener('mouseout',function(){this.style.background='#3498db'});if(!form){console.error('未找到表单元素');alert('页面加载错误：未找到表单');return}form.addEventListener('submit',async function(e){console.log('按钮被点击，开始处理表单...');e.preventDefault();submitBtn.disabled=true;submitBtn.style.background='#95a5a6';resultDiv.textContent='正在处理...';resultDiv.style.background='#e3f2fd';resultDiv.style.color='#1565c0';debugDiv.textContent='';try{let chatInput=chatIdInput.value.trim();const botToken=document.getElementById('botToken').value.trim();const photoUrl=document.getElementById('photoUrl').value.trim();const caption=document.getElementById('caption').value.trim();const inlineKeyboardStr=document.getElementById('inlineKeyboard').value.trim();if(!chatInput||!botToken||!photoUrl||!inlineKeyboardStr){throw new Error('请填写所有必填字段（Chat ID/用户名、BotToken、图片URL和键盘配置）');}try{new URL(photoUrl)}catch(urlError){throw new Error('图片URL格式无效，请检查');}debugDiv.textContent='获取表单数据成功\n';let chatId=chatInput;if(chatInput.startsWith('@')){resultDiv.textContent=`正在将用户名${chatInput}转换为Chat ID...`;debugDiv.textContent+=`检测到用户名格式，正在转换:${chatInput}\n`;const getChatUrl=`https:const response=await fetch(getChatUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:chatInput})});const responseData=await response.json();debugDiv.textContent+=`转换响应状态:${response.status}\n`;debugDiv.textContent+=`转换响应数据:${JSON.stringify(responseData,null,2).substring(0,200)}...\n`;if(!response.ok||!responseData.ok){throw new Error(`用户名转换失败:${responseData.description||'未知错误'}（请确保机器人已加入该群组/频道）`)}chatId=responseData.result.id;const chatType=responseData.result.type;resultDiv.textContent=`用户名转换成功，正在发送照片到${chatType}...`;debugDiv.textContent+=`转换成功，Chat ID:${chatId}\n`;chatIdInput.value=chatId;chatIdInfo.textContent=`已自动将用户名转换为${chatType}的Chat ID`;chatIdInfo.style.color='#2e7d32'}console.log('最终使用的参数:',{chatId,botToken,photoUrl,caption,inlineKeyboardStr});let inlineKeyboard;try{inlineKeyboard=JSON.parse(inlineKeyboardStr);if(!Array.isArray(inlineKeyboard)){throw new Error("inline_keyboard必须是二维数组");}debugDiv.textContent+='JSON解析成功\n'}catch(jsonError){throw new Error(`JSON格式错误:${jsonError.message}，请检查按钮配置`)}const sendUrl=`https:const requestBody={chat_id:chatId,photo:photoUrl,caption:caption,reply_markup:{inline_keyboard:inlineKeyboard}};debugDiv.textContent+=`准备发送请求到:${sendUrl}\n`;debugDiv.textContent+=`请求数据:${JSON.stringify(requestBody,null,2).substring(0,200)}...\n`;resultDiv.textContent='正在发送照片...';resultDiv.style.background='#e3f2fd';resultDiv.style.color='#1565c0';const response=await fetch(sendUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(requestBody)});debugDiv.textContent+=`请求响应状态:${response.status}\n`;const responseData=await response.json();debugDiv.textContent+=`响应数据:${JSON.stringify(responseData,null,2).substring(0,200)}...\n`;if(response.ok&&responseData.ok){resultDiv.textContent=`照片发送成功！\n消息ID:${responseData.result.message_id}\nChat ID:${chatId}`;resultDiv.style.background='#e8f5e9';resultDiv.style.color='#2e7d32'}else{resultDiv.textContent=`发送失败:${JSON.stringify(responseData,null,2)}`;resultDiv.style.background='#ffebee';resultDiv.style.color='#c62828'}}catch(error){console.error('处理出错:',error);resultDiv.textContent=`处理出错:${error.message}`;resultDiv.style.background='#ffebee';resultDiv.style.color='#c62828'}finally{submitBtn.disabled=false;submitBtn.style.background='#3498db';console.log('处理完成')}});console.log('表单初始化完成，等待用户输入...')});</script>
+
+
+<h1 id="三、修改带按钮的消息"><a href="#三、修改带按钮的消息" class="headerlink" title="三、修改带按钮的消息"></a>三、修改带按钮的消息</h1><h2 id="1-修改文字消息"><a href="#1-修改文字消息" class="headerlink" title="1. 修改文字消息"></a>1. 修改文字消息</h2><p>&ensp;&ensp;&ensp;&ensp;调用下面的 api 就可以修改消息了</p>
+<ul>
+<li>接口地址：<a target="_blank" rel="noopener" href="https://api.telegram.org/bot">https://api.telegram.org/bot</a><BotToken>&#x2F;editMessageText</li>
+<li>请求方法：POST</li>
+<li>内容类型：application&#x2F;json</li>
+</ul>
+<p>&ensp;&ensp;&ensp;&ensp;下面是请求的 json 请求体：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;chat_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的chat_id&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;message_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的message_id&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;这是修改后的新文本&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;reply_markup&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;inline_keyboard&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">      <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span><span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;新按钮&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://新链接.com&quot;</span><span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>&ensp;&ensp;&ensp;&ensp;如果你不想直接调用 api 的话，你可以在下面非常方便地修改文字消息。</p>
+
+<div style="max-width: 800px; margin: 20px auto; padding: 20px; font-family: Arial, sans-serif; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;"><form id="editForm"style="background: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"><div style="margin-bottom: 15px;"><label for="messageLink"style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">消息链接</label><input type="text"id="messageLink"placeholder="例如: https://t.me/username/message_id 或 https://t.me/c/chat_id/message_id"required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;"></div><div style="margin-bottom: 15px;"><label for="botToken"style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">BotToken</label><input type="text"id="botToken"placeholder="例如: 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11"required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;"></div><div style="margin-bottom: 15px;"><label for="messageText"style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">修改后的文本</label><textarea id="messageText"rows="3"placeholder="请输入修改后的消息内容"required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; resize: vertical;"></textarea></div><div style="margin-bottom: 15px;"><label for="inlineKeyboard"style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">inline_keyboard配置（JSON格式）</label><textarea id="inlineKeyboard"placeholder='例如: [[{"text":"按钮1","callback_data":"btn1"},{"text":"按钮2","callback_data":"btn2"}],[{"text":"按钮3","callback_data":"btn3"}]]'required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; min-height: 100px; resize: vertical; font-family: monospace;"></textarea></div><button type="submit"id="submitBtn"style="background: #3498db; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 14px;">发送修改请求</button></form><div id="result"style="margin-top: 20px; padding: 10px; border-radius: 4px;"></div><div id="debugInfo"style="margin-top: 10px; padding: 10px; font-size: 0.9em; color: #666; border-top: 1px dashed #ccc;"></div></div><script>document.addEventListener('DOMContentLoaded',function(){console.log('页面加载完成，初始化表单...');const form=document.getElementById('editForm');const submitBtn=document.getElementById('submitBtn');const resultDiv=document.getElementById('result');const debugDiv=document.getElementById('debugInfo');submitBtn.addEventListener('mouseover',function(){this.style.background='#2980b9'});submitBtn.addEventListener('mouseout',function(){this.style.background='#3498db'});if(!form){console.error('未找到表单元素');alert('页面加载错误：未找到表单');return}form.addEventListener('submit',async function(e){console.log('按钮被点击，开始处理表单...');e.preventDefault();submitBtn.disabled=true;submitBtn.style.background='#95a5a6';resultDiv.textContent='正在处理...';resultDiv.style.background='#e3f2fd';resultDiv.style.color='#1565c0';debugDiv.textContent='';try{const messageLink=document.getElementById('messageLink').value;const botToken=document.getElementById('botToken').value;const text=document.getElementById('messageText').value;const inlineKeyboardStr=document.getElementById('inlineKeyboard').value;if(!messageLink||!botToken||!text||!inlineKeyboardStr){throw new Error('请填写所有必填字段');}debugDiv.textContent='获取表单数据成功\n';console.log('表单数据:',{messageLink,botToken,text,inlineKeyboardStr});let inlineKeyboard;try{inlineKeyboard=JSON.parse(inlineKeyboardStr);if(!Array.isArray(inlineKeyboard)){throw new Error("inline_keyboard必须是二维数组");}debugDiv.textContent+='JSON解析成功\n'}catch(jsonError){throw new Error(`JSON格式错误:${jsonError.message}，请检查按钮配置`)}let chatId,messageId;const linkRegex1=/https:\/\/t\.me\/c\/([^\/]+)\/(\d+)/;const linkRegex2=/https:\/\/t\.me\/([^\/]+)\/(\d+)/;let match;if((match=linkRegex1.exec(messageLink))){chatId=match[1];messageId=parseInt(match[2]);resultDiv.textContent=`解析成功:chat_id=${chatId},message_id=${messageId}`;resultDiv.style.background='#e3f2fd';resultDiv.style.color='#1565c0';debugDiv.textContent+=`解析链接格式1:chat_id=${chatId},message_id=${messageId}\n`}else if((match=linkRegex2.exec(messageLink))){const username=match[1];messageId=parseInt(match[2]);resultDiv.textContent=`正在通过用户名@${username}获取chat_id...`;resultDiv.style.background='#e3f2fd';resultDiv.style.color='#1565c0';debugDiv.textContent+=`解析链接格式2:username=${username},message_id=${messageId}\n`;const getChatUrl=`https:debugDiv.textContent+=`调用getChat接口:${getChatUrl}\n`;try{const chatResponse=await fetch(getChatUrl);debugDiv.textContent+=`getChat响应状态:${chatResponse.status}\n`;const chatData=await chatResponse.json();debugDiv.textContent+=`getChat响应数据:${JSON.stringify(chatData,null,2).substring(0,200)}...\n`;if(!chatResponse.ok||!chatData.ok){throw new Error(`获取chat_id失败:${JSON.stringify(chatData)}`)}chatId=chatData.result.id;resultDiv.textContent=`获取成功:chat_id=${chatId},message_id=${messageId}`;resultDiv.style.background='#e3f2fd';resultDiv.style.color='#1565c0'}catch(fetchError){throw new Error(`调用getChat接口失败:${fetchError.message}`)}}else{throw new Error('消息链接格式不正确，请检查输入');}const editUrl=`https:const requestBody={chat_id:chatId,message_id:messageId,text:text,reply_markup:{inline_keyboard:inlineKeyboard}};debugDiv.textContent+=`准备发送请求到:${editUrl}\n`;debugDiv.textContent+=`请求数据:${JSON.stringify(requestBody,null,2).substring(0,200)}...\n`;resultDiv.textContent='正在发送修改请求...';resultDiv.style.background='#e3f2fd';resultDiv.style.color='#1565c0';const response=await fetch(editUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(requestBody)});debugDiv.textContent+=`修改请求响应状态:${response.status}\n`;const responseData=await response.json();debugDiv.textContent+=`修改响应数据:${JSON.stringify(responseData,null,2).substring(0,200)}...\n`;if(response.ok&&responseData.ok){resultDiv.textContent=`消息修改成功！\nchat_id:${chatId}\nmessage_id:${messageId}`;resultDiv.style.background='#e8f5e9';resultDiv.style.color='#2e7d32'}else{resultDiv.textContent=`修改失败:${JSON.stringify(responseData,null,2)}`;resultDiv.style.background='#ffebee';resultDiv.style.color='#c62828'}}catch(error){console.error('处理出错:',error);resultDiv.textContent=`处理出错:${error.message}`;resultDiv.style.background='#ffebee';resultDiv.style.color='#c62828'}finally{submitBtn.disabled=false;submitBtn.style.background='#3498db';console.log('处理完成')}});console.log('表单初始化完成，等待用户输入...')});</script>
+
+
+<h2 id="2-修改图片消息"><a href="#2-修改图片消息" class="headerlink" title="2. 修改图片消息"></a>2. 修改图片消息</h2><p>&ensp;&ensp;&ensp;&ensp;调用下面的 api 就可以修改消息了</p>
+<ul>
+<li>接口地址：<a target="_blank" rel="noopener" href="https://api.telegram.org/bot">https://api.telegram.org/bot</a><BotToken>&#x2F;editMessageMedia</li>
+<li>请求方法：POST  </li>
+<li>内容类型：application&#x2F;json</li>
+</ul>
+<p>&ensp;&ensp;&ensp;&ensp;下面是请求的 json 请求体：  </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;chat_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的chat_id&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;message_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的图片消息ID&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;media&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;photo&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;media&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://新图片URL&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;caption&quot;</span><span class="punctuation">:</span> <span class="string">&quot;新图片说明&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;reply_markup&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;inline_keyboard&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">      <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;按钮&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://链接.com&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>&ensp;&ensp;&ensp;&ensp;如果你不想直接调用 api 的话，你可以在下面非常方便地修改图片消息。</p>
+
+<div style="max-width: 800px; margin: 20px auto; padding: 20px; font-family: Arial, sans-serif; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;"><form id="editForm"style="background: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"><div style="margin-bottom: 15px;"><label for="messageLink"style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">消息链接</label><input type="text"id="messageLink"placeholder="例如: https://t.me/username/message_id 或 https://t.me/c/chat_id/message_id"required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;"></div><div style="margin-bottom: 15px;"><label for="botToken"style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">BotToken</label><input type="text"id="botToken"placeholder="例如: 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11"required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;"></div><div style="margin-bottom: 15px;"><label for="imageUrl"style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">新图片URL</label><input type="text"id="imageUrl"placeholder="例如: https://example.com/new-image.jpg"required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;"></div><div style="margin-bottom: 15px;"><label for="caption"style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">新图片说明</label><textarea id="caption"rows="2"placeholder="请输入新的图片说明文字"required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; resize: vertical;"></textarea></div><div style="margin-bottom: 15px;"><label for="inlineKeyboard"style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">inline_keyboard配置（JSON格式）</label><textarea id="inlineKeyboard"placeholder='例如: [[{"text":"按钮","url":"https://链接.com"}]]'required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; min-height: 100px; resize: vertical; font-family: monospace;"></textarea></div><button type="submit"id="submitBtn"style="background: #3498db; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 14px;">发送修改请求</button></form><div id="result"style="margin-top: 20px; padding: 10px; border-radius: 4px;"></div><div id="debugInfo"style="margin-top: 10px; padding: 10px; font-size: 0.9em; color: #666; border-top: 1px dashed #ccc;"></div></div><script>document.addEventListener('DOMContentLoaded',function(){console.log('页面加载完成，初始化表单...');const form=document.getElementById('editForm');const submitBtn=document.getElementById('submitBtn');const resultDiv=document.getElementById('result');const debugDiv=document.getElementById('debugInfo');submitBtn.addEventListener('mouseover',function(){this.style.background='#2980b9'});submitBtn.addEventListener('mouseout',function(){this.style.background='#3498db'});if(!form){console.error('未找到表单元素');alert('页面加载错误：未找到表单');return}form.addEventListener('submit',async function(e){console.log('按钮被点击，开始处理表单...');e.preventDefault();submitBtn.disabled=true;submitBtn.style.background='#95a5a6';resultDiv.textContent='正在处理...';resultDiv.style.background='#e3f2fd';resultDiv.style.color='#1565c0';debugDiv.textContent='';try{const messageLink=document.getElementById('messageLink').value;const botToken=document.getElementById('botToken').value;const imageUrl=document.getElementById('imageUrl').value;const caption=document.getElementById('caption').value;const inlineKeyboardStr=document.getElementById('inlineKeyboard').value;if(!messageLink||!botToken||!imageUrl||!caption||!inlineKeyboardStr){throw new Error('请填写所有必填字段');}debugDiv.textContent='获取表单数据成功\n';let inlineKeyboard;try{inlineKeyboard=JSON.parse(inlineKeyboardStr);if(!Array.isArray(inlineKeyboard)){throw new Error("inline_keyboard必须是二维数组");}debugDiv.textContent+='JSON解析成功\n'}catch(jsonError){throw new Error(`JSON格式错误:${jsonError.message}，请检查按钮配置`)}let chatId,messageId;const linkRegex1=/https:\/\/t\.me\/c\/([^\/]+)\/(\d+)/;const linkRegex2=/https:\/\/t\.me\/([^\/]+)\/(\d+)/;let match;if((match=linkRegex1.exec(messageLink))){chatId=match[1];messageId=parseInt(match[2]);resultDiv.textContent=`解析成功:chat_id=${chatId},message_id=${messageId}`;resultDiv.style.background='#e3f2fd';resultDiv.style.color='#1565c0';debugDiv.textContent+=`解析链接格式1:chat_id=${chatId},message_id=${messageId}\n`}else if((match=linkRegex2.exec(messageLink))){const username=match[1];messageId=parseInt(match[2]);resultDiv.textContent=`正在通过用户名@${username}获取chat_id...`;resultDiv.style.background='#e3f2fd';resultDiv.style.color='#1565c0';debugDiv.textContent+=`解析链接格式2:username=${username},message_id=${messageId}\n`;const getChatUrl=`https:debugDiv.textContent+=`调用getChat接口:${getChatUrl}\n`;try{const chatResponse=await fetch(getChatUrl);debugDiv.textContent+=`getChat响应状态:${chatResponse.status}\n`;const chatData=await chatResponse.json();debugDiv.textContent+=`getChat响应数据:${JSON.stringify(chatData,null,2).substring(0,200)}...\n`;if(!chatResponse.ok||!chatData.ok){throw new Error(`获取chat_id失败:${JSON.stringify(chatData)}`)}chatId=chatData.result.id;resultDiv.textContent=`获取成功:chat_id=${chatId},message_id=${messageId}`;resultDiv.style.background='#e3f2fd';resultDiv.style.color='#1565c0'}catch(fetchError){throw new Error(`调用getChat接口失败:${fetchError.message}`)}}else{throw new Error('消息链接格式不正确，请检查输入');}const editUrl=`https:const requestBody={chat_id:chatId,message_id:messageId,media:{type:"photo",media:imageUrl,caption:caption},reply_markup:{inline_keyboard:inlineKeyboard}};debugDiv.textContent+=`准备发送请求到:${editUrl}\n`;debugDiv.textContent+=`请求数据:${JSON.stringify(requestBody,null,2).substring(0,300)}...\n`;resultDiv.textContent='正在发送修改请求...';resultDiv.style.background='#e3f2fd';resultDiv.style.color='#1565c0';const response=await fetch(editUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(requestBody)});debugDiv.textContent+=`修改请求响应状态:${response.status}\n`;const responseData=await response.json();debugDiv.textContent+=`修改响应数据:${JSON.stringify(responseData,null,2).substring(0,300)}...\n`;if(response.ok&&responseData.ok){resultDiv.textContent=`消息修改成功！\nchat_id:${chatId}\nmessage_id:${messageId}`;resultDiv.style.background='#e8f5e9';resultDiv.style.color='#2e7d32'}else{resultDiv.textContent=`修改失败:${JSON.stringify(responseData,null,2)}`;resultDiv.style.background='#ffebee';resultDiv.style.color='#c62828'}}catch(error){console.error('处理出错:',error);resultDiv.textContent=`处理出错:${error.message}`;resultDiv.style.background='#ffebee';resultDiv.style.color='#c62828'}finally{submitBtn.disabled=false;submitBtn.style.background='#3498db';console.log('处理完成')}});console.log('表单初始化完成，等待用户输入...')});</script>
+
+
+<p>&ensp;&ensp;&ensp;&ensp;最后，如果你想获取上面那些界面的源代码，可以 <a target="_blank" rel="noopener" href="https://finder.btfs.io/#/detail?id=4KoQa5gBIrhbctkK_HG-">点这里</a> 下载</p>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://i.postimg.cc/wjyBppSB/image.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://i.postimg.cc/wjyBppSB/image.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">fylcr</div><div class="post-copyright__author_desc"></div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="https://fylcr.dpdns.org/posts/6c53/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('https://fylcr.dpdns.org/posts/6c53/')">使用 bot 发送和修改带按钮的 tg 消息</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="https://fylcr.dpdns.org/posts/6c53/"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=使用 bot 发送和修改带按钮的 tg 消息&amp;url=https://fylcr.dpdns.org/posts/6c53/&amp;pic=https://cn.bing.com/th?id=OHR.MongoliaYurts_ZH-CN4015475887_UHD.jpg" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://fylcr.dpdns.org" target="_blank">fylcr主页</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/technology/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>technology<span class="tagsPageCount">6</span></a><a class="post-meta__box__tags" href="/tags/Telegram/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>Telegram<span class="tagsPageCount">1</span></a></div></div></div><div class="post_share"><div class="social-share" data-image="https://i.postimg.cc/wjyBppSB/image.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/posts/c83/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">blender学习笔记</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/posts/c83/" title="blender学习笔记"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-07-14</div><div class="title">blender学习笔记</div></div></a></div><div><a href="/posts/46e8/" title="godot游戏开发随手记(1)"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-06-27</div><div class="title">godot游戏开发随手记(1)</div></div></a></div><div><a href="/posts/9073/" title="btfs的价格报价器终于管用了"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-06-28</div><div class="title">btfs的价格报价器终于管用了</div></div></a></div><div><a href="/posts/d689/" title="我的低价服务器方案"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-07-04</div><div class="title">我的低价服务器方案</div></div></a></div><div><a href="/posts/594a/" title="我的文件存储方案"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-06-28</div><div class="title">我的文件存储方案</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="anzhiyufont anzhiyu-icon-comments"></i><span> 评论</span></div><div class="comment-randomInfo"><a onclick="anzhiyu.addRandomCommentInfo()" href="javascript:void(0)">匿名评论</a><a href="/privacy" style="margin-left: 4px">隐私政策</a></div><div class="comment-tips" id="comment-tips"><span>✅ 你无需删除空行，直接评论以获取最佳展示效果</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div><div class="comment-barrage"></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://i.postimg.cc/wjyBppSB/image.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__description">fylcr的个人主页与blog</br>一个对所有事情都感到好奇又不精通的人</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">fylcr</h1><div class="author-info__desc"></div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/fylcr" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="https://space.bilibili.com/1195801938" target="_blank" title="BiliBili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%BF%85%E8%A6%81%E7%9F%A5%E8%AF%86%E8%AE%B2%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">一、必要知识讲解</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%8F%91%E9%80%81%E5%B8%A6%E6%8C%89%E9%92%AE%E7%9A%84%E6%B6%88%E6%81%AF"><span class="toc-number">3.</span> <span class="toc-text">二、发送带按钮的消息</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%8F%91%E9%80%81%E6%96%87%E5%AD%97%E6%B6%88%E6%81%AF"><span class="toc-number">3.1.</span> <span class="toc-text">1. 发送文字消息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%8F%91%E9%80%81%E5%9B%BE%E7%89%87%E6%B6%88%E6%81%AF"><span class="toc-number">3.2.</span> <span class="toc-text">2. 发送图片消息</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%BF%AE%E6%94%B9%E5%B8%A6%E6%8C%89%E9%92%AE%E7%9A%84%E6%B6%88%E6%81%AF"><span class="toc-number">4.</span> <span class="toc-text">三、修改带按钮的消息</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BF%AE%E6%94%B9%E6%96%87%E5%AD%97%E6%B6%88%E6%81%AF"><span class="toc-number">4.1.</span> <span class="toc-text">1. 修改文字消息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%BF%AE%E6%94%B9%E5%9B%BE%E7%89%87%E6%B6%88%E6%81%AF"><span class="toc-number">4.2.</span> <span class="toc-text">2. 修改图片消息</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/6c53/" title="使用 bot 发送和修改带按钮的 tg 消息">使用 bot 发送和修改带按钮的 tg 消息</a><time datetime="2025-08-02T11:44:56.000Z" title="发表于 2025-08-02 19:44:56">2025-08-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/c83/" title="blender学习笔记">blender学习笔记</a><time datetime="2025-07-14T01:54:48.000Z" title="发表于 2025-07-14 09:54:48">2025-07-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/d689/" title="我的低价服务器方案">我的低价服务器方案</a><time datetime="2025-07-04T02:23:41.000Z" title="发表于 2025-07-04 10:23:41">2025-07-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/594a/" title="我的文件存储方案">我的文件存储方案</a><time datetime="2025-06-28T14:34:09.000Z" title="发表于 2025-06-28 22:34:09">2025-06-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/9073/" title="btfs的价格报价器终于管用了">btfs的价格报价器终于管用了</a><time datetime="2025-06-28T06:33:24.000Z" title="发表于 2025-06-28 14:33:24">2025-06-28</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="footer_deal"><a class="deal_link" target="_blank" rel="noopener" href="https://x.com/fylcr123" title="x"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-a-Group1142813756"></use></svg></a><a class="deal_link" target="_blank" rel="noopener" href="https://www.pixiv.net/users/115090801" title="pixiv"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-pixiv"></use></svg></a><a class="deal_link" target="_blank" rel="noopener" href="https://t.me/fylcr" title="telegram"><i class="anzhiyufont anzhiyu-icon-paper-plane"></i></a><img class="footer_mini_logo" title="返回顶部" alt="返回顶部" onclick="anzhiyu.scrollToDest(0, 500)" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://i.postimg.cc/wjyBppSB/image.jpg" size="50px"/><a class="deal_link" target="_blank" rel="noopener" href="https://github.com/fylcr" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="deal_link" target="_blank" rel="noopener" href="https://space.bilibili.com/1195801938" title="Bilibili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a><a class="deal_link" href="/copyright" title="CC"><i class="anzhiyufont anzhiyu-icon-copyright-line"></i></a></div><div id="anzhiyu-footer"><div class="footer-group"><div class="footer-title">导航</div><div class="footer-links"><a class="footer-item" title="fylcr导航" href="/nav/#">fylcr导航</a><a class="footer-item" title="fylcr笔记" href="/note">fylcr笔记</a></div></div><div class="footer-group"><div class="footer-title">关于</div><div class="footer-links"><a class="footer-item" title="捐赠" href="/donate">捐赠</a><a class="footer-item" title="关于本人" href="/about">关于本人</a></div></div><div class="footer-group"><div class="footer-title-group"><div class="footer-title">友链</div><a class="random-friends-btn" id="footer-random-friends-btn" href="javascript:addFriendLinksInFooter();" title="换一批友情链接"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right"></i></a></div><div class="footer-links" id="friend-links-in-footer"></div></div></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v5.4.0" title="博客框架为Hexo_v5.4.0"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.1.5/img/badge/Frame-Hexo.svg" alt="博客框架为Hexo_v5.4.0"/></a><a class="github-badge" target="_blank" href="https://blog.anheyu.com/" style="margin-inline:5px" data-title="本站使用AnZhiYu主题" title="本站使用AnZhiYu主题"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.9/img/Theme-AnZhiYu-2E67D3.svg" alt="本站使用AnZhiYu主题"/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title="本站项目由Github托管"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.1.5/img/badge/Source-Github.svg" alt="本站项目由Github托管"/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.2.0/img/badge/Copyright-BY-NC-SA.svg" alt="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"/></a></p></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2025 By <a class="footer-bar-link" href="/" title="fylcr" target="_blank">fylcr</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://icp.gov.moe/?keyword=20250778" title="萌ICP备20250778号">萌ICP备20250778号</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">2</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title"></div><div class="back-menu-list"><a class="back-menu-item" href="/null"><img class="back-menu-item-icon"/><span class="back-menu-item-text"></span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/nav/#"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 导航</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/note"><i class="anzhiyufont anzhiyu-icon-book faa-tada" style="font-size: 0.9em;"></i><span> 笔记</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-circle-info faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/donate/"><i class="anzhiyufont anzhiyu-icon-thumbs-up faa-tada" style="font-size: 0.9em;"></i><span> 捐赠</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/Telegram/" style="font-size: 0.88rem;">Telegram<sup>1</sup></a><a href="/tags/blender/" style="font-size: 0.88rem;">blender<sup>1</sup></a><a href="/tags/btfs/" style="font-size: 0.88rem;">btfs<sup>1</sup></a><a href="/tags/daily/" style="font-size: 0.88rem;">daily<sup>1</sup></a><a href="/tags/godot/" style="font-size: 0.88rem;">godot<sup>1</sup></a><a href="/tags/storage/" style="font-size: 0.88rem;">storage<sup>1</sup></a><a href="/tags/technology/" style="font-size: 0.88rem;">technology<sup>6</sup></a><a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 0.88rem;">服务器<sup>1</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="anzhiyufont anzhiyu-icon-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.5/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("06/23/2025 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2025 By 安知鱼 V1.6.14",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 fylcr 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>(() => {
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://twikoo.fylcr.dpdns.org/.netlify/functions/twikoo',
+      region: '',
+      onCommentLoaded: () => {
+        anzhiyu.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(runFn,0)
+    else getScript('https://cdn.cbd.int/twikoo@1.6.39/dist/twikoo.all.min.js').then(runFn)
+  }
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo.fylcr.dpdns.org/.netlify/functions/twikoo',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const runFn = () => {
+    init();
+    
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) anzhiyu.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else {
+      loadTwikoo()
+    }
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const getComment = () => {
+    const runTwikoo = () => {
+      twikoo.getRecentComments({
+        envId: 'https://twikoo.fylcr.dpdns.org/.netlify/functions/twikoo',
+        region: '',
+        pageSize: 6,
+        includeReply: true
+      }).then(function (res) {
+        const twikooArray = res.map(e => {
+          return {
+            'content': changeContent(e.comment),
+            'avatar': e.avatar,
+            'nick': e.nick,
+            'url': e.url + '#' + e.id,
+            'date': new Date(e.created).toISOString()
+          }
+        })
+
+        saveToLocal.set('twikoo-newest-comments', JSON.stringify(twikooArray), 10/(60*24))
+        generateHtml(twikooArray)
+      }).catch(function (err) {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.textContent= "无法获取评论，请确认相关配置是否正确"
+      })
+    }
+
+    if (typeof twikoo === 'object') {
+      runTwikoo()
+    } else {
+      getScript('https://cdn.cbd.int/twikoo@1.6.39/dist/twikoo.all.min.js').then(runTwikoo)
+    }
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'data-lazy-src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'><div class='name'><span>${array[i].nick} </span></div></a>`
+        }
+        
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
+        <time datetime="${array[i].date}">${anzhiyu.diffDate(array[i].date, true)}</time></div>
+        </div>`
+      }
+    } else {
+      result += '没有评论'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom && ($dom.innerHTML= result)
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('twikoo-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><script src="/js/anzhiyu/right_click_menu.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><script async src="https://gcore.jsdelivr.net/gh/fylcr/nav@image/iconfont.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["meta[property=\"og:image\"]","meta[property=\"og:title\"]","meta[property=\"og:url\"]","meta[property=\"og:type\"]","meta[property=\"og:site_name\"]","meta[property=\"og:description\"]","head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
