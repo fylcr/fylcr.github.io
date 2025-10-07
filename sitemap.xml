@@ -147,20 +147,6 @@
   </url>
   
   <url>
-    <loc>https://fylcr.dpdns.org/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/</loc>
-    <lastmod>2025-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://fylcr.dpdns.org/tags/daily/</loc>
-    <lastmod>2025-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://fylcr.dpdns.org/tags/Telegram/</loc>
     <lastmod>2025-10-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -169,6 +155,20 @@
   
   <url>
     <loc>https://fylcr.dpdns.org/tags/storage/</loc>
+    <lastmod>2025-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://fylcr.dpdns.org/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/</loc>
+    <lastmod>2025-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://fylcr.dpdns.org/tags/daily/</loc>
     <lastmod>2025-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
